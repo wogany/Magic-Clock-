@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic-Mini 灯珠索引取模工具</title>
+    
+    <!-- 引入字体：Inter 字体用于正文，JetBrains Mono 用于代码显示 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    
+    <!-- 引入自定义样式表 -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 顶部导航栏：包含标题和主要操作按钮 -->
+        <header class="app-header">
+            <div class="logo">
+                <span class="logo-icon">✨</span>
+                <h1>Magic-Mini <span class="subtitle">灯珠取模工具</span></h1>
+            </div>
+            <div class="header-actions">
+                <button id="btn-save" class="btn-primary">保存配置</button>
+                <button id="btn-load">加载配置</button>
+                <button id="btn-help" class="btn-icon" title="帮助">?</button>
+            </div>
+        </header>
+
+        <div class="app-content">
+            <!-- 主画布区域：灯珠布局的展示和交互中心 -->
+            <main class="app-main">
+                <div class="canvas-container">
+                    <!-- 灯珠容器：JS 会在这里根据配置动态生成 6 组灯珠 -->
+                    <div id="bead-container" class="bead-container"></div>
+                </div>
+            </main>
+
+            <!-- 侧边栏：操作控制面板、统计数据和结果展示 -->
+            <aside class="app-sidebar">
+                <!-- 操作按钮组 -->
+                <div class="sidebar-section">
+                    <h3>操作面板</h3>
+                    <div class="control-grid">
+                        <button id="btn-undo" title="撤销 (Ctrl+Z)">撤销</button>
+                        <button id="btn-redo" title="重做 (Ctrl+Y)">重做</button>
+                        <button id="btn-clear" class="btn-danger">清空画布</button>
+                        <button id="btn-toggle-index">切换索引</button>
+                    </div>
+                </div>
+
+                <!-- 统计卡片：实时显示已选中的灯珠数量 -->
+                <div class="sidebar-section">
+                    <h3>状态统计</h3>
+                    <div class="stats-card">
+                        <div class="stat-item">
+                            <span class="stat-label">已选灯珠</span>
+                            <span class="stat-value"><span id="count">0</span> / 90</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 导出数据区域：按组显示已选灯珠的局部索引列表 -->
+                <div class="sidebar-section result-section">
+                    <h3>导出数据</h3>
+                    <div id="index-display-grid" class="index-display-grid">
+                        <!-- 索引数组将由 JS 动态生成并填充在这里 -->
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- 帮助模态弹窗：默认隐藏，点击问号按钮显示 -->
+    <div id="help-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>使用指引</h2>
+            <div class="help-body">
+                <section>
+                    <h4>物理布局</h4>
+                    <p>共有 6 组 LED 模块（Group 0-5），界面上从右向左排列。</p>
+                </section>
+                <section>
+                    <h4>组内顺序</h4>
+                    <p>每组包含 15 个灯珠 (5行 x 3列)，硬件采用<strong>蛇形连线</strong>（从右向左、从上到下，方向逐行交替）。</p>
+                </section>
+                <section>
+                    <h4>操作说明</h4>
+                    <ul>
+                        <li>点击灯珠即可切换选中状态。</li>
+                        <li>支持 <strong>Ctrl+Z</strong> 撤销和 <strong>Ctrl+Y</strong> 重做。</li>
+                        <li>点击右侧显示的<strong>索引数组</strong>即可自动复制。</li>
+                    </ul>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入 JavaScript 逻辑脚本 -->
+    <script src="script.js"></script>
+</body>
+</html>

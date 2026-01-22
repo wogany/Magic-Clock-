@@ -1,0 +1,300 @@
+/* 
+ * Magic-Mini 灯珠取模工具全局样式
+ * 风格：深色极客风，采用 CSS 变量管理配色与间距
+ */
+
+:root {
+    /* 深色配色方案定义 */
+    --bg-main: #0f172a;       /* 页面背景：深蓝黑色 */
+    --bg-card: #1e293b;       /* 卡片/侧边栏背景：稍浅的蓝色 */
+    --bg-sidebar: #0f172a;    /* 侧边栏辅助色 */
+    --primary: #22d3ee;       /* 主色调：青色（荧光感） */
+    --primary-glow: rgba(34, 211, 238, 0.4); /* 青色发光效果 */
+    --secondary: #818cf8;     /* 辅助色：紫色 */
+    --accent: #f472b6;        /* 强调色：粉色 */
+    --danger: #f43f5e;        /* 危险色：红色（用于删除/清空） */
+    --border: #334155;        /* 边框色 */
+    --text-main: #f8fafc;     /* 主文字颜色 */
+    --text-muted: #94a3b8;    /* 辅助文字颜色（灰度） */
+    
+    /* 尺寸与物理参数定义 */
+    --header-height: 64px;    /* 顶部导航高度 */
+    --sidebar-width: 320px;   /* 侧边栏宽度 */
+    --bead-size: 32px;        /* 单个灯珠直径 */
+    --bead-gap: 12px;         /* 灯珠间距 */
+    --radius: 12px;           /* 圆角大小 */
+    --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); /* 全局平滑过渡效果 */
+}
+
+/* 基础重置 */
+* {
+    box-sizing: border-box; /* 确保边框和内边距不影响元素最终宽高 */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', -apple-system, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    line-height: 1.5;
+    overflow: hidden; /* 禁止整页滚动，改为内部局部滚动，体验更像桌面应用 */
+}
+
+/* 页面大框架布局：Flex 纵向排列 */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* 顶部标题栏样式 */
+.app-header {
+    height: var(--header-height);
+    background-color: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px;
+    z-index: 100;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo h1 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.logo .subtitle {
+    font-weight: 400;
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-left: 4px;
+}
+
+/* 中间内容区域：Flex 横向排列（主画布 + 侧边栏） */
+.app-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* 主工作区：绘制灯珠的地方 */
+.app-main {
+    flex: 1;
+    overflow: auto;
+    /* 点阵背景装饰 */
+    background-image: radial-gradient(var(--border) 1px, transparent 1px);
+    background-size: 32px 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+}
+
+/* 灯珠容器：row-reverse 确保 Group 0 在最右侧（符合硬件物理排列） */
+.bead-container {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 32px;
+}
+
+/* 侧边栏样式 */
+.app-sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--bg-card);
+    border-left: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    overflow-y: auto;
+}
+
+.sidebar-section {
+    margin-bottom: 32px;
+}
+
+.sidebar-section h3 {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+}
+
+/* 通用按钮样式 */
+button {
+    background: var(--bg-main);
+    color: var(--text-main);
+    border: 1px solid var(--border);
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+button:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: var(--bg-main);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: #67e8f9;
+    transform: translateY(-1px);
+}
+
+.btn-danger:hover {
+    background: var(--danger);
+    color: white;
+    border-color: var(--danger);
+}
+
+/* 单个灯珠组卡片：使用毛玻璃效果 (backdrop-filter) */
+.group-card {
+    background: rgba(30, 41, 59, 0.5);
+    backdrop-filter: blur(8px);
+    padding: 20px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    transition: var(--transition);
+}
+
+.group-card:hover {
+    border-color: var(--primary);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+/* 灯珠网格：3列5行 */
+.bead-grid {
+    display: grid;
+    grid-template-columns: repeat(3, var(--bead-size));
+    grid-template-rows: repeat(5, var(--bead-size));
+    gap: var(--bead-gap);
+    direction: rtl; /* 右对齐显示 */
+}
+
+/* 单个圆形灯珠样式 */
+.bead {
+    width: var(--bead-size);
+    height: var(--bead-size);
+    border-radius: 50%;
+    background: #334155;
+    border: 2px solid transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.2);
+    transition: var(--transition);
+    user-select: none; /* 防止频繁点击时误选中文字 */
+}
+
+.bead:hover {
+    transform: scale(1.2); /* 悬停放大 */
+    background: #475569;
+}
+
+/* 选中后的灯珠发光效果 */
+.bead.selected {
+    background: var(--primary);
+    color: var(--bg-main);
+    font-weight: 700;
+    box-shadow: 0 0 15px var(--primary-glow);
+}
+
+/* 隐藏索引时的样式 */
+.bead.hide-index {
+    color: transparent !important;
+}
+
+/* 为不同组的灯珠分配不同的选中颜色，方便区分 */
+.group-0 .bead.selected, .group-1 .bead.selected { background: var(--primary); box-shadow: 0 0 15px var(--primary-glow); }
+.group-2 .bead.selected, .group-3 .bead.selected { background: var(--secondary); box-shadow: 0 0 15px rgba(129, 140, 248, 0.4); }
+.group-4 .bead.selected, .group-5 .bead.selected { background: var(--accent); box-shadow: 0 0 15px rgba(244, 114, 182, 0.4); }
+
+/* 侧边栏导出数据卡片 */
+.index-group-box {
+    background: var(--bg-main);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.index-group-box:hover {
+    border-color: var(--primary);
+    background: #1e293b;
+}
+
+.index-group-box .array-content {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    word-break: break-all;
+    color: var(--primary);
+}
+
+/* 弹窗样式 */
+.modal {
+    display: none; /* 默认隐藏 */
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--text-muted);
+}
+
+/* 响应式：针对窄屏幕（如平板）将侧边栏移至下方 */
+@media (max-width: 1024px) {
+    .app-content {
+        flex-direction: column;
+        overflow-y: auto;
+    }
+    .app-sidebar {
+        width: 100%;
+        border-left: none;
+        border-top: 1px solid var(--border);
+    }
+    body {
+        overflow: auto;
+    }
+}
