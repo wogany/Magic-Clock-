@@ -1,6 +1,6 @@
-# Magic-Mini 灯珠显示取模工具 ✨
+# Magic-Clock 灯珠取模工具 ✨
 
-一个专为 Magic-Mini 硬件项目设计的 LED 灯珠布局可视化与索引取模工具。
+一个专为 Magic-Clock 硬件项目设计的 LED 灯珠布局可视化与索引取模工具。
 
 ---
 

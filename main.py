@@ -6,13 +6,13 @@ import os
 import time
 
 """
-Magic-Mini 灯珠索引取模工具 - 后端服务
+Magic-Clock 灯珠取模工具 - 后端服务
 功能：提供灯珠配置的保存、读取，以及服务的自动管理（心跳检测与自动开启浏览器）
 """
 
 # 初始化 FastAPI 应用
 # FastAPI 是一个现代、快速（高性能）的 Python Web 框架，用于构建 API
-app = FastAPI(title="Magic-Mini 灯珠索引取模工具")
+app = FastAPI(title="Magic-Clock 灯珠取模工具")
 
 # 全局变量：记录最后一次心跳的时间戳
 # 心跳机制用于检测前端页面是否仍然开启
